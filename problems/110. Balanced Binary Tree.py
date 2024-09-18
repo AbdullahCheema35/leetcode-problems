@@ -12,18 +12,15 @@ class TreeNode:
 
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        def check_height(node: Optional[TreeNode], balanced: list[bool]) -> int:
+        def check_height(node: Optional[TreeNode]) -> int:
             if node is None:
                 return 0
-            left = check_height(node.left, balanced)
-            if not balanced[0]:
+            left = check_height(node.left)
+            if left == -1:
                 return -1
-            right = check_height(node.right, balanced)
-            if abs(left - right) > 1:
-                balanced[0] = False
+            right = check_height(node.right)
+            if right == -1 or abs(left - right) > 1:
+                return -1
             return 1 + max(left, right)
 
-        balanced: list[bool] = [True]
-
-        check_height(root, balanced)
-        return balanced[0]
+        return check_height(root) != -1
