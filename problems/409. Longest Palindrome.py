@@ -1,11 +1,12 @@
+from collections import Counter
+
+
 class Solution:
     def longestPalindrome(self, s: str) -> int:
-        d = {}
-        for c in s:
-            d[c] = d.get(c, 0) + 1
+        counter = Counter(s)
         res = 0
         odd = 0
-        for v in d.values():
+        for v in counter.values():
             res += v // 2
             if not odd and v % 2:
                 odd = 1
