@@ -7,7 +7,7 @@ class Solution:
         end: int = len(nums) - 1
         result: List[int] = [0] * len(nums)
         for i, _ in enumerate(result):
-            if abs(nums[start]) < abs(nums[end]):
+            if abs(nums[start]) > abs(nums[end]):
                 result[i] = nums[end] ** 2
                 end -= 1
             else:
