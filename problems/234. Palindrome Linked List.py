@@ -1,4 +1,4 @@
-from typing import Optional, assert_type, cast
+from typing import Optional, cast
 
 
 # Definition for singly-linked list.
