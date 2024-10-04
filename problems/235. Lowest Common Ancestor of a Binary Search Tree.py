@@ -1,6 +1,3 @@
-from typing import Optional, cast
-
-
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
@@ -13,17 +10,13 @@ class Solution:
     def lowestCommonAncestor(
         self, root: "TreeNode", p: "TreeNode", q: "TreeNode"
     ) -> "TreeNode":
-        def findLCA(
-            node: Optional["TreeNode"], p: "TreeNode", q: "TreeNode"
-        ) -> Optional["TreeNode"]:
-            if not node:
-                return
+        def find_lca(node: "TreeNode", p: "TreeNode", q: "TreeNode") -> "TreeNode":
             if node.val in (p.val, q.val):
                 return node
-            left: Optional["TreeNode"] = findLCA(node.left, p, q)
-            right: Optional["TreeNode"] = findLCA(node.right, p, q)
-            if left and right:
-                return node
-            return left or right
+            if p.val < node.val and q.val < node.val:
+                return find_lca(node.left, p, q)
+            if p.val > node.val and q.val > node.val:
+                return find_lca(node.right, p, q)
+            return node
 
-        return cast(TreeNode, findLCA(root, p, q))
+        return find_lca(root, p, q)
