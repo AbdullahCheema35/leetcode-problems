@@ -7,9 +7,8 @@ class Solution:
         TOTAL_BITS: Final[int] = 32
         result: int = 0
 
-        for i in range(TOTAL_BITS):
+        for _ in range(TOTAL_BITS):
             curr_bit: int = LSB & n
-            n = n >> 1
-            if curr_bit:
-                result |= LSB << (TOTAL_BITS - i - 1)
+            result = (result << 1) | curr_bit
+            n >>= 1
         return result
