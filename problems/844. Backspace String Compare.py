@@ -18,4 +18,7 @@ class Solution:
             else:
                 tEditor += c
 
-        return sEditor == tEditor
+        if sEditor == tEditor:
+            return True
+        else:
+            return False
