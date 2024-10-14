@@ -1,24 +1,23 @@
-from copy import copy, deepcopy
-
-
 class Solution:
     def backspaceCompare(self, s: str, t: str) -> bool:
-        sEditor: str = ""
-        tEditor: str = ""
+        s_editor: list[str] = list(s)
+        t_editor: list[str] = list(t)
 
-        for c in s:
+        s_pointer: int = 0
+        t_pointer: int = 0
+
+        for c in s_editor:
             if c == "#":
-                sEditor = sEditor[:-1]
+                s_pointer = max(s_pointer - 1, 0)
             else:
-                sEditor += c
+                s_editor[s_pointer] = c
+                s_pointer += 1
 
-        for c in t:
-            if c == "#" and len(tEditor) > 0:
-                tEditor = tEditor[: len(tEditor) - 1]
+        for c in t_editor:
+            if c == "#":
+                t_pointer = max(t_pointer - 1, 0)
             else:
-                tEditor += c
+                t_editor[t_pointer] = c
+                t_pointer += 1
 
-        if sEditor == tEditor:
-            return True
-        else:
-            return False
+        return s_editor[:s_pointer] == t_editor[:t_pointer]
