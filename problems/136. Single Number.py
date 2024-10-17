@@ -1,18 +1,11 @@
-from typing import List
+from typing import Counter, List
 
 
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        d: dict[int, int] = {}
-        for num in nums:
-            freq: int | None = d.get(num)
-            if freq:
-                d[num] = freq + 1
-            else:
-                d[num] = 1
-
-        for k, v in d.items():
+        counter: Counter = Counter(nums)
+        for k, v in counter.items():
             if v == 1:
                 return k
 
-        return -1
+        return 0
