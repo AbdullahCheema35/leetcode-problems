@@ -1,30 +1,26 @@
-from typing import Dict, List
+from typing import Final, List, Set, Tuple
 
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         triplets: List[List[int]] = []
 
-        d: dict = {}
+        TARGET: Final[int] = 0
 
-        distinct: dict = {}
+        distinct_tuples: Set[tuple] = set()
 
-        TARGET: int = 0
+        array_elems: Set[int] = set()
 
         for i, i_num in enumerate(nums):
-            d.clear()
-            for j, j_num in enumerate(nums[i + 1 :], i + 1):
-                required: int = TARGET - (i_num + j_num)
-                if d.get(required) is not None:
-                    if (
-                        (not distinct.get(i_num))
-                        or (not distinct.get(j_num))
-                        or (not distinct.get(required))
-                    ):
-                        distinct[i_num] = 1
-                        distinct[j_num] = 1
-                        distinct[required] = 1
-                        triplets.append([i_num, j_num, required])
-                d[j_num] = j
+            array_elems.clear()
+            for _, j_num in enumerate(nums[i + 1 :], i + 1):
+                req_elem: int = TARGET - (i_num + j_num)
+                if req_elem in array_elems:
+                    sorted_triplet: List[int] = sorted([i_num, j_num, req_elem])
+                    sorted_tuple: Tuple = tuple(sorted_triplet)
+                    if sorted_tuple not in distinct_tuples:
+                        triplets.append(sorted_triplet)
+                        distinct_tuples.add(sorted_tuple)
+                array_elems.add(j_num)
 
         return triplets
