@@ -1,4 +1,3 @@
-import copy
 from typing import List
 
 
@@ -10,8 +9,6 @@ class Solution:
         MAX_INT = m * n + 1
 
         dp: List[List[int]] = [[-1] * m for _ in range(n)]
-
-        count: int = 0
 
         def calculate(
             mat: List[List[int]], dp: List[List[int]], i: int, j: int, m: int, n: int
@@ -30,21 +27,22 @@ class Solution:
                 dp[i][j - 1] if j > 0 and dp[i][j - 1] != -1 else MAX_INT,
             )
 
-            nonlocal count
-            count += 1
-
             dp[i][j] = (off_by_one_dist + 1) if mat[i][j] != 0 else 0
             return dp[i][j]
 
         calculate(mat, dp, 0, 0, m, n)
 
-        print(count)
-
         return dp
 
 
 if __name__ == "__main__":
-    input_mat = [[0] * 3 for _ in range(3)]
-    input_mat[1][1] = 1
+    input_mat = [
+        [0, 1, 0, 1, 1],
+        [1, 1, 0, 0, 1],
+        [0, 0, 0, 1, 0],
+        [1, 0, 1, 1, 1],
+        [1, 0, 0, 0, 1],
+    ]
+    # input_mat[1][1] = 1
     sol = Solution()
     sol.updateMatrix(input_mat)
