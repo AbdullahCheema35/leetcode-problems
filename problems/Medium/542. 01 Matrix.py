@@ -22,8 +22,8 @@ class Solution:
                         dp[i][j] = min(dp[i][j], dp[i - 1][j] + 1)
 
         # bottom-right to top-left pass
-        for i in range(n - 1, -1, -1):
-            for j in range(m - 1, -1, -1):
+        for i in reversed(range(n)):
+            for j in reversed(range(m)):
                 if dp[i][j] != 0:
                     if j < m - 1:
                         dp[i][j] = min(dp[i][j], dp[i][j + 1] + 1)
