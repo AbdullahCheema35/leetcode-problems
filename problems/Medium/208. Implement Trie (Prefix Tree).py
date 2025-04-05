@@ -20,39 +20,65 @@ class Trie:
     10. The trie can be used to find all words that are a supersequence of a given word.
     """
 
-    def __init__(self):
-        self.terminal: bool = False
+    def __init__(self, terminal=False):
+        self.terminal: bool = terminal
         self.children: Dict[str, Trie] = {}
 
+    # def insert(self, word: str) -> None:
+    #     if len(word) > 0:   # It can be ignored for leetcode specific problem since len(word) >= 1
+    #         curr_char: str = word[0]
+    #         if not self.children.get(curr_char):
+    #             self.children[curr_char] = Trie()
+    #         if len(word) == 1:
+    #             self.children[curr_char].terminal = True
+    #             return
+    #         self.children[curr_char].insert(word[1:])
+        
+    # def search(self, word: str) -> bool:
+    #     if len(word) > 0:   # It can be ignored for leetcode specific problem since len(word) >= 1
+    #         curr_char: str = word[0]
+    #         if not self.children.get(curr_char):
+    #             return False
+    #         if len(word) == 1:
+    #             return self.children[curr_char].terminal
+    #         return self.children[curr_char].search(word[1:])
+    #     return False
+
+    # def startsWith(self, prefix: str) -> bool:
+    #     if len(prefix) > 0:   # It can be ignored for leetcode specific problem since len(prefix) >= 1
+    #         curr_char: str = prefix[0]
+    #         if not self.children.get(curr_char):
+    #             return False
+    #         if len(prefix) == 1:
+    #             return True
+    #         return self.children[curr_char].startsWith(prefix[1:])
+    #     return False
+
     def insert(self, word: str) -> None:
-        if len(word) > 0:   # It can be ignored for leetcode specific problem since len(word) >= 1
-            curr_char: str = word[0]
-            if not self.children.get(curr_char):
-                self.children[curr_char] = Trie()
-            if len(word) == 1:
-                self.children[curr_char].terminal = True
-                return
-            self.children[curr_char].insert(word[1:])
+        curr: Trie = self
+        for char in word:
+            if char not in curr.children:
+                curr.children[char] = Trie()
+            curr = curr.children[char]
+        curr.terminal = True
 
     def search(self, word: str) -> bool:
-        if len(word) > 0:   # It can be ignored for leetcode specific problem since len(word) >= 1
-            curr_char: str = word[0]
-            if not self.children.get(curr_char):
+        curr: Trie = self
+        for char in word:
+            if char in curr.children:
+                curr = curr.children[char]
+            else:
                 return False
-            if len(word) == 1:
-                return self.children[curr_char].terminal
-            return self.children[curr_char].search(word[1:])
-        return False
+        return curr.terminal
 
     def startsWith(self, prefix: str) -> bool:
-        if len(prefix) > 0:   # It can be ignored for leetcode specific problem since len(prefix) >= 1
-            curr_char: str = prefix[0]
-            if not self.children.get(curr_char):
+        curr: Trie = self
+        for char in prefix:
+            if char not in curr.children:
                 return False
-            if len(prefix) == 1:
-                return True
-            return self.children[curr_char].startsWith(prefix[1:])
-        return False
+            else:
+                curr = curr.children[char]
+        return True
 
 
 # Your Trie object will be instantiated and called as such:
