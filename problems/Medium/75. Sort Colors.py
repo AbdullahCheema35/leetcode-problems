@@ -6,31 +6,12 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        def partition(nums: List[int], start: int, end: int) -> int:
-            pivot: int = nums[end]
-            i: int = start - 1
-
-            for j in range(start, end):
-                if nums[j] <= pivot:
+        i = -1
+        for color in range(3):
+            for j in range(i+1, len(nums)):
+                if nums[j] == color:
                     i += 1
-                    nums[i], nums[j] = nums[j], nums[i]
-            
-            i += 1
-            nums[i], nums[end] = nums[end], nums[i]
-            
-            return i
-        
-        def quickSort(nums: List[int], start: int, end: int) -> None:
-            if end <= start:
-                return
-
-            pivot_index: int = partition(nums, start, end)
-
-            quickSort(nums, start, pivot_index-1)
-            quickSort(nums, pivot_index+1, end)
-
-        quickSort(nums, 0, len(nums)-1)
-
+                    nums[j], nums[i] = nums[i], nums[j]
 
 if __name__ == "__main__":
     nums: List[int] = [8,7,6,5,4,3,2,1,0]
